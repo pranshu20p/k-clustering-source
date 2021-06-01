@@ -1,0 +1,95 @@
+def  function (k):
+  c=[]
+  result=[1]
+  while(len(result))>0:
+   for i in range(k):
+     m=random.randint(0,(X2.shape[0]-1))# Select random integer between 0 and length 
+     c.append(m) #append in c list 
+   counter=Counter(c)# check number of times it occurs 
+   result = [i for i, j in counter.items() if j > 1]
+  return result,c 
+  from collections import Counter 
+  test_list=[0,1,1,2,2,2,3]
+res_list = [i for i, value in enumerate(test_list) if value == 3]
+oc_set = set()
+res = []
+new=[]
+import numpy as np
+def function_unique(test_list):
+  oc_set = set()
+  res = []
+  for idx, val in enumerate(test_list):
+    if val not in oc_set:
+        oc_set.add(val)         
+    else:
+        res.append(idx)     
+  return oc_set
+
+def function_duplicate_index(test_list):
+    oc_set1=function_unique(test_list)
+    new=[]
+    for i in oc_set1:
+        res_list=[j for j, value in enumerate(test_list) if value == i]
+        new.append(res_list)
+    return new 
+    #Define k clustering
+import numpy as np
+from collections import Counter 
+x1=np.array([10,2,4,7])
+x2=np.array([7,10,12,20])
+X=list(zip(x1,x2))
+import pandas as pd
+import numpy as np
+X2=np.array(X)
+print(X2)
+X2.shape[0]
+import random
+#Function to generate random clusters 
+
+def function_kClustering(k,X2,iterations):# Number of Clusters,# Matrix ,# Number of Iterations 
+    import math
+    k=k
+    m=function(k)[1]# Random point assignments/index  to k clusters 
+    iterations=iterations
+    X_centroid=np.zeros([iterations,k,X2.shape[1]])#Matrix -iterations, Number of Clusters and dimenstions
+    dist=np.zeros([iterations,X2.shape[0],X2.shape[1]])
+    X_initial=np.zeros([k,X2.shape[1]])# inital Matrix is function of number of clusters and vector width 
+    for j in range(len(m)):#Number of Clusters /indexes to clusters 
+          X_initial[j]=np.array(X2[m[j],:])#Inital Cluster 
+    for h in range(iterations):#Iterate over many times 
+        temp=[]
+        k=k
+        Cluster=[] # CLuster List 
+        array=[]  
+        mu=np.zeros([iterations,k,X2.shape[1]]) #Mean Matrix with iteratiins, Clusterrs and vectors mean)               
+        for i in range(X2.shape[0]):#iterate over all points 
+            temp=[]# Temp
+            lemma=[]
+            for j in  range(len(m)):#iterate over differnt centroids 
+              X_centroid[h,j,]=X_initial[j,:]# jth Centroid value of h iteration 
+              dist_temp=[]
+              sum=0
+              dist1=[]# Empty list
+              dist_temp=np.subtract(X2[i,:],X_centroid[h,j,:])# Difference between ith point vector and  jth centroid of hth iteration 
+              L2dist=np.linalg.norm(dist_temp)#Difference of vector Point vs jth centroid in h th iteration 
+              lemma.append(L2dist)
+            p=lemma.index(min(lemma)) 
+            Cluster.append(p)# Append Cluster Number with minimum distance
+        Cluster
+        k=[]
+        z=[]
+        z2=function_duplicate_index(Cluster)
+        for i in range(len(z2)):
+          r=X2[z2[i],:]
+          mu[h,i,:]=np.mean(r,axis=0)#mean has two components and there are k means per iteration
+        X_centroid[h,:,:]=mu[h,:,:]#mean of h iteration for various clusters 
+        delta=np.diff(X_centroid[h,:,:]-X_centroid[h-1,:,:])# difference between means of k clusters 
+        norm=np.linalg.norm(delta)
+        epsilon=np.exp(-20)
+        if norm<epsilon:
+          print("Final Centroids are",X_centroid[h,:,:]," found in iteration ",h)
+          break
+        else:
+          X_initial=X_centroid[h,:,:]# 2 dimensional Matrix for k clusters and vector size of len (m)
+    return X_centroid[h,:,:],h
+      
